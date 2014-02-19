@@ -1,0 +1,7 @@
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCRTest\bin\Debug\KataBankOCRTest.dll
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCRTest\bin\Debug\KataBankOCRTest.pdb
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCRTest\obj\Debug\KataBankOCRTest.csprojResolveAssemblyReference.cache
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCRTest\obj\Debug\KataBankOCRTest.dll
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCRTest\obj\Debug\KataBankOCRTest.pdb
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCRTest\bin\Debug\KataBankOCR.exe
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCRTest\bin\Debug\KataBankOCR.pdb

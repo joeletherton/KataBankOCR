@@ -1,0 +1,9 @@
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCR\bin\Debug\KataBankOCR.exe.config
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCR\bin\Debug\KataBankOCR.exe
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCR\bin\Debug\KataBankOCR.pdb
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCR\obj\Debug\KataBankOCR.csprojResolveAssemblyReference.cache
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCR\obj\Debug\KataBankOCR.Properties.Resources.resources
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCR\obj\Debug\KataBankOCR.csproj.GenerateResource.Cache
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCR\obj\Debug\KataBankOCR.exe
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCR\obj\Debug\KataBankOCR.pdb
+C:\Data\Development\Pillar\KataBankOCR\KataBankOCR\obj\Debug\KataBankOCR.RunOCR.resources
