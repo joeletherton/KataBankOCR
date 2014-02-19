@@ -22,6 +22,13 @@ namespace KataBankOCR
             Worker = worker;
         }
 
+        /// <summary>
+        /// Performs the actual call. Simply
+        /// cycles through the lines that 
+        /// have been presented and outputs
+        /// the account number status
+        /// </summary>
+        /// <param name="lines"></param>
         public void ProcessOCRFile(string[] lines)
         {
             Lines = lines;
@@ -44,6 +51,13 @@ namespace KataBankOCR
 
         }
 
+        /// <summary>
+        /// This method is responsible for validating
+        /// account numbers through the checksum
+        /// mathematical formula
+        /// </summary>
+        /// <param name="accountNumber"></param>
+        /// <returns></returns>
         public static bool IsValidCheckSum(string accountNumber)
         {
             if (accountNumber.Length != 9)
@@ -81,11 +95,29 @@ namespace KataBankOCR
             }
         }
 
+        /// <summary>
+        /// This method tests if a sequence of lines intended
+        /// for a single account number are all of the proper
+        /// length. There should be 4 lines and each should be 
+        /// 27 characters. The offset indicates which row to 
+        /// start on
+        /// </summary>
+        /// <param name="offSet"></param>
+        /// <returns></returns>
         public bool AreLinesValid(int offSet)
         {
+            // There are 4 lines to check and
+            // each should be at least 27 characters
             return !Lines.Skip(offSet).Take(4).Any(x => x.Length < 27);
         }
 
+        /// <summary>
+        /// Responsible for getting the account number string
+        /// This method receives an index to begin the character
+        /// search and returns a 9 digit string
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <returns></returns>
         public string GetAccountNumber(int rowIndex)
         {
             if (Lines.Length <= rowIndex)
@@ -112,10 +144,21 @@ namespace KataBankOCR
             return result.ToString();
         }
 
+        /// <summary>
+        /// This method converts a character mask into a
+        /// string character for insertion into an account number
+        /// The rowStartIndex is self explanatory. The 
+        /// characterStartIndex indicates the account number 
+        /// character so it should not exceed 9
+        /// </summary>
+        /// <param name="rowStartIndex"></param>
+        /// <param name="characterStartIndex"></param>
+        /// <returns></returns>
         public string GetCharacter(int rowStartIndex, int characterStartIndex)
         {
             string response;
 
+            // Just a little safety checking
             if (Lines == null || rowStartIndex >= Lines.Length || rowStartIndex % 4 != 0)
             {
                response = "?";
@@ -163,6 +206,13 @@ namespace KataBankOCR
             return response;
         }
 
+        /// <summary>
+        /// This method is responsible for performing the addition
+        /// of the slice masks to retrieve the numerical character mask
+        /// </summary>
+        /// <param name="rowStartIndex"></param>
+        /// <param name="characterStartIndex"></param>
+        /// <returns></returns>
         public int GetCharacterMask(int rowStartIndex, int characterStartIndex)
         {
             return
@@ -177,6 +227,16 @@ namespace KataBankOCR
                 GetSliceMask(rowStartIndex, characterStartIndex, 2, 2);
         }
 
+        /// <summary>
+        /// This method retrieves the numerical value of the requested
+        /// slice. The slice is determined by the x,y coordinates in a
+        /// 3x3 grid as defined by the exponential relationship of the mask
+        /// </summary>
+        /// <param name="rowStartIndex"></param>
+        /// <param name="characterStartIndex"></param>
+        /// <param name="sliceX"></param>
+        /// <param name="sliceY"></param>
+        /// <returns></returns>
         public int GetSliceMask(int rowStartIndex, int characterStartIndex, int sliceX, int sliceY)
         {
             // The character start index is the offset to begin collecting the character
@@ -197,22 +257,30 @@ namespace KataBankOCR
                 case 1:
                 case 4:
                 case 7:
-                    charIsValid = charIsValid || (slice == '_'); // Short circuit if an empty space is already detected
+                    charIsValid =  (slice == '_');
                     break;
                 case 3:
                 case 5:
                 case 6:
                 case 8:
-                    charIsValid = charIsValid || (slice == '|');
+                    charIsValid = (slice == '|');
                     break;
                 default:
                     charIsValid = false;  // Should never hit, but if I had a nickel for every "should"...
                     break;
             }
 
+            // if this character is not valid, make sure that the 
+            // the result can not be accidentally valid
             return (charIsValid) ? Convert.ToInt32(Math.Pow(2, offSet)) : 1000;
         }
 
+        /// <summary>
+        /// Presentation method only. Exposes ambiguous or erroneous
+        /// account numbers for display
+        /// </summary>
+        /// <param name="accountNumber"></param>
+        /// <returns></returns>
         public static string GetAccountNumberStatus(string accountNumber)
         {
             // This could be done in a ternary fashion, but 
@@ -226,11 +294,25 @@ namespace KataBankOCR
             return string.Empty;
         }
 
+        /// <summary>
+        /// Presentation method only. Determines the current 
+        /// percentage to report to the UI
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="total"></param>
+        /// <returns></returns>
         public static int GetPercentageComplete(int current, int total)
         {
             return 100 * current / total;
         }
 
+        /// <summary>
+        /// Validation helper. This line guarantees that all lines
+        /// will have 27 characters and that the characters will
+        /// fail slice comparisons.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static string PadShortLine(string source)
         {
             if (source.Length >= 27)
@@ -239,6 +321,12 @@ namespace KataBankOCR
             return source.Replace(Environment.NewLine, "").PadRight(27, 'x');
         }
 
+        /// <summary>
+        /// This enumeration defines the numeric
+        /// masks for valid characters. Any return
+        /// that does not match one of these masks
+        /// should represent a ?
+        /// </summary>
         public enum Characters
         {
             // Assignments of masks
